@@ -18,23 +18,47 @@
 
 /*************************************************************************************************/
 // Free to edit
-#define PatternCount 4
-#define InputNodes 2
-#define HiddenNodes 6
-#define OutputNodes 1
+#define PatternCount 16
+#define InputNodes 4
+#define HiddenNodes 25
+#define OutputNodes 2
 
 const float LearningInputs[PatternCount][InputNodes] = {
-	{ 0.0f, 0.0f },
-	{ 0.0f, 1.0f },
-	{ 1.0f, 0.0f },
-	{ 1.0f, 1.0f }
+	{ 0.0f, 0.0f, 0.0f, 0.0f },
+	{ 0.0f, 0.0f, 0.0f, 1.0f },
+	{ 0.0f, 0.0f, 1.0f, 0.0f },
+	{ 0.0f, 0.0f, 1.0f, 1.0f },
+	{ 0.0f, 1.0f, 0.0f, 0.0f },
+	{ 0.0f, 1.0f, 0.0f, 1.0f },
+	{ 0.0f, 1.0f, 1.0f, 0.0f },
+	{ 0.0f, 1.0f, 1.0f, 1.0f },
+	{ 1.0f, 0.0f, 0.0f, 0.0f },
+	{ 1.0f, 0.0f, 0.0f, 1.0f },
+	{ 1.0f, 0.0f, 1.0f, 0.0f },
+	{ 1.0f, 0.0f, 1.0f, 1.0f },
+	{ 1.0f, 1.0f, 0.0f, 0.0f },
+	{ 1.0f, 1.0f, 0.0f, 1.0f },
+	{ 1.0f, 1.0f, 1.0f, 0.0f },
+	{ 1.0f, 1.0f, 1.0f, 1.0f },
 };
 
-const float LearningOutputs[PatternCount][InputNodes] = {// XOR output as an example
-	{ 0.0f },
-	{ 1.0f },
-	{ 1.0f },
-	{ 0.0f }
+const float LearningOutputs[PatternCount][OutputNodes] = {
+	{ 0.0f, 1.0f },// LearningOutputs[x][0] represens AND for LearningInputs[0,1][x]
+	{ 0.0f, 0.0f },// LearningOutputs[x][1] represens XNOR for LearningInputs[0,1,2,3][x]
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 0.0f, 0.0f },
+	{ 1.0f, 0.0f },
+	{ 1.0f, 0.0f },
+	{ 1.0f, 0.0f },
+	{ 1.0f, 1.0f },
 };
 /**********************************************************************************************/
 
@@ -91,10 +115,7 @@ unsigned TrainingData::getNextInputs(vector<float> &inputValues)
 
 	for (int i = 0; i<InputNodes; i++)
 		inputValues.push_back(LearningInputs[training_line][i]);
-
-	if(OutputNodes==1)
-		training_line++;
-
+	
 	return inputValues.size();
 }
 
@@ -103,10 +124,9 @@ unsigned TrainingData::getTargetOutputs(vector<float> &targetOutValues)
 	targetOutValues.clear();
 
 	for (int i = 0; i<OutputNodes; i++)
-		targetOutValues.push_back(LearningInputs[training_line][i]);
+		targetOutValues.push_back(LearningOutputs[training_line][i]);
 
-	if (OutputNodes > 1)
-		training_line++;
+	training_line++;
 
 	return targetOutValues.size();
 }
@@ -392,16 +412,16 @@ int main()
 		showVectorValues(": Inputs:", input);
 		myNet.feedForward(input);
 
-		// Collect the net's actual results:
-		myNet.getResults(result);
-		showVectorValues("Outputs: ", result);
-
 		// Train the net what the outputs should have been:
 		trainData.getTargetOutputs(target);
 		showVectorValues("Targets: ", target);
 		assert(target.size() == topology.back());
 
+		// Collect the net's actual results:
 		myNet.backProp(target);
+		myNet.getResults(result);
+		showVectorValues("Outputs: ", result);
+		
 
 		// Report how well the training is working, averaged over recent samples:
 		cout << "Net recent average error: "
@@ -423,7 +443,8 @@ int main()
 		cout << endl << "Run " << trainingPass;
 
 		//Get new input data and feed it forward:
-		input = { (float)(rand() % 2), (float)(rand() % 2) };
+		//Make sure that you put input data same as InputNodes
+		input = { (float)(rand() % 2), (float)(rand() % 2), (float)(rand() % 2), (float)(rand() % 2) };
 		showVectorValues(": Inputs:", input);
 		myNet.feedForward(input);
 
