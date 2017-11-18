@@ -20,7 +20,7 @@
 // Free to edit
 #define PatternCount 16
 #define InputNodes 4
-#define HiddenNodes 25
+#define HiddenNodes 32
 #define OutputNodes 2
 
 const float LearningInputs[PatternCount][InputNodes] = {
@@ -71,40 +71,11 @@ int trainingPass = 0;
 // Training class to read training data from an array
 class TrainingData
 {
-public:	
-	bool isEof(void) { return m_trainingDataFile.eof(); }
-	void getTopology(vector<unsigned> &topology);
-
+public:
 	// Returns the number of input values read from the file:
 	unsigned getNextInputs(vector<float> &inputValues);
-	unsigned getTargetOutputs(vector<float> &targetOutValues);
-
-private:
-	ifstream m_trainingDataFile;
-
+	unsigned getTargetOutputs(vector<float> &targetOutValues);	
 };
-
-
-void TrainingData::getTopology(vector<unsigned> &topology)
-{
-	string line;
-	string label;
-
-	getline(m_trainingDataFile, line);
-	stringstream ss(line);
-	ss >> label;
-	if (this->isEof() || label.compare("topology:") != 0)
-	{
-		abort();
-	}
-
-	while (!ss.eof())
-	{
-		unsigned n;
-		ss >> n;
-		topology.push_back(n);
-	}
-}
 
 unsigned TrainingData::getNextInputs(vector<float> &inputValues)
 {
@@ -227,7 +198,7 @@ void Neuron::updateInputWeights(Layer &prevLayer)
 	}
 }
 
-float Neuron::eta = 0.15; // overall net learning rate, [0.0..1.0]
+float Neuron::eta = 0.1; // overall net learning rate, [0.0..1.0]
 float Neuron::alpha = 0.5; // momentum multiplier of last deltaWeight [0.0..n]
 
 float Neuron::sumDOW(const Layer &nextLayer) const
@@ -451,10 +422,11 @@ int main()
 		// Collect the net's actual results:
 		myNet.getResults(result);
 		showVectorValues("Outputs: ", result);
-
+		
 		Sleep(1000);
 	}
 
+	system("pause");
 
 	return 0;
 }
