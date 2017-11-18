@@ -5,6 +5,7 @@ This Neural network contains one hidden layer neurons.
 The whole topology of neural network can be configured here:
 
 /*************************************************************************************************/
+
 // Free to edit
 
 #define PatternCount 4
