@@ -43,8 +43,8 @@ const float LearningInputs[PatternCount][InputNodes] = {
 };
 
 const float LearningOutputs[PatternCount][OutputNodes] = {
-	{ 0.0f, 1.0f },// LearningOutputs[x][0] represens AND for LearningInputs[0,1][x]
-	{ 0.0f, 0.0f },// LearningOutputs[x][1] represens XNOR for LearningInputs[0,1,2,3][x]
+	{ 0.0f, 1.0f },// LearningOutputs[x][0] represens AND for LearningInputs[x][0,1]
+	{ 0.0f, 0.0f },// LearningOutputs[x][1] represens XNOR for LearningInputs[x][0,1,2,3]
 	{ 0.0f, 0.0f },
 	{ 0.0f, 0.0f },
 	{ 0.0f, 0.0f },
