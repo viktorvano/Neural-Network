@@ -1,5 +1,5 @@
 # Neural-Network
-Configutable Neural Network in Cpp, Visual Studio 2017.
+Configurable Neural Network in Cpp, Visual Studio 2017.
 
 This Neural network contains one hidden layer neurons.
 The whole topology of neural network can be configured here:
