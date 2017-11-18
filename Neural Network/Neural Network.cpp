@@ -416,9 +416,9 @@ int main()
 		trainData.getTargetOutputs(target);
 		showVectorValues("Targets: ", target);
 		assert(target.size() == topology.back());
+		myNet.backProp(target);//This function alters neurons
 
-		// Collect the net's actual results:
-		myNet.backProp(target);
+		// Collect the net's actual results:		
 		myNet.getResults(result);
 		showVectorValues("Outputs: ", result);
 		
