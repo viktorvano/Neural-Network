@@ -28,7 +28,7 @@ const float LearningInputs[PatternCount][InputNodes] = {
 
 };
 
-const float LearningOutputs[PatternCount][InputNodes] = {// XOR output as an example
+const float LearningOutputs[PatternCount][OutputNodes] = {// XOR output as an example
 
 { 0.0f },
 
