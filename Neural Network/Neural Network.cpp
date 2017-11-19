@@ -73,8 +73,7 @@ int trainingPass = 0;
 // Training class to read training data from an array
 class TrainingData
 {
-public:
-	// Returns the number of input values read from the file:
+public:	
 	unsigned getNextInputs(vector<float> &inputValues);
 	unsigned getTargetOutputs(vector<float> &targetOutValues);
 };
