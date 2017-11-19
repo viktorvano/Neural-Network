@@ -45,8 +45,8 @@ const float LearningInputs[PatternCount][InputNodes] = {
 };
 
 const float LearningOutputs[PatternCount][OutputNodes] = {
-	{ 0.0f, 1.0f },// LearningOutputs[x][0] represens AND for LearningInputs[x][0,1]
-	{ 0.0f, 0.0f },// LearningOutputs[x][1] represens XNOR for LearningInputs[x][0,1,2,3]
+	{ 0.0f, 1.0f },// LearningOutputs[x][0] represents AND for LearningInputs[x][0,1]
+	{ 0.0f, 0.0f },// LearningOutputs[x][1] represents XNOR for LearningInputs[x][0,1,2,3]
 	{ 0.0f, 0.0f },
 	{ 0.0f, 0.0f },
 	{ 0.0f, 0.0f },
@@ -415,7 +415,7 @@ int main()
 		cout << endl << "Run " << trainingPass;
 
 		//Get new input data and feed it forward:
-		//Make sure that you put input data same as InputNodes
+		//Make sure that your input data are the same size as InputNodes
 		input = { (float)(rand() % 2), (float)(rand() % 2), (float)(rand() % 2), (float)(rand() % 2) };
 		showVectorValues(": Inputs:", input);
 		myNet.feedForward(input);
