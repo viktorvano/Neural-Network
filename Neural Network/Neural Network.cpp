@@ -22,6 +22,8 @@
 #define InputNodes 4
 #define HiddenNodes 32
 #define OutputNodes 2
+#define velocity 0.1; // overall net learning rate [0.0..1.0]
+#define momentum 0.5; // momentum multiplier of last deltaWeight [0.0..n]
 
 const float LearningInputs[PatternCount][InputNodes] = {
 	{ 0.0f, 0.0f, 0.0f, 0.0f },
@@ -74,7 +76,7 @@ class TrainingData
 public:
 	// Returns the number of input values read from the file:
 	unsigned getNextInputs(vector<float> &inputValues);
-	unsigned getTargetOutputs(vector<float> &targetOutValues);	
+	unsigned getTargetOutputs(vector<float> &targetOutValues);
 };
 
 unsigned TrainingData::getNextInputs(vector<float> &inputValues)
@@ -86,7 +88,7 @@ unsigned TrainingData::getNextInputs(vector<float> &inputValues)
 
 	for (int i = 0; i<InputNodes; i++)
 		inputValues.push_back(LearningInputs[training_line][i]);
-	
+
 	return inputValues.size();
 }
 
@@ -198,12 +200,12 @@ void Neuron::updateInputWeights(Layer &prevLayer)
 	}
 }
 
-float Neuron::eta = 0.1; // overall net learning rate, [0.0..1.0]
-float Neuron::alpha = 0.5; // momentum multiplier of last deltaWeight [0.0..n]
+float Neuron::eta = velocity; // overall net learning rate [0.0..1.0]
+float Neuron::alpha = momentum; // momentum multiplier of last deltaWeight [0.0..n]
 
 float Neuron::sumDOW(const Layer &nextLayer) const
 {
-	float sum = 0.0;
+	float sum = 0.0f;
 
 	// Sum our contributions of the errors at the nodes we feed
 	for (unsigned n = 0; n < nextLayer.size() - 1; n++)
@@ -389,10 +391,10 @@ int main()
 		assert(target.size() == topology.back());
 		myNet.backProp(target);//This function alters neurons
 
-		// Collect the net's actual results:		
+							   // Collect the net's actual results:		
 		myNet.getResults(result);
 		showVectorValues("Outputs: ", result);
-		
+
 
 		// Report how well the training is working, averaged over recent samples:
 		cout << "Net recent average error: "
@@ -422,7 +424,7 @@ int main()
 		// Collect the net's actual results:
 		myNet.getResults(result);
 		showVectorValues("Outputs: ", result);
-		
+
 		Sleep(1000);
 	}
 

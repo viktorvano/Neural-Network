@@ -16,6 +16,10 @@ The whole topology of neural network can be configured here:
 
 #define OutputNodes 1
 
+#define velocity 0.1; // overall net learning rate [0.0..1.0]
+
+#define momentum 0.5; // momentum multiplier of last deltaWeight [0.0..n]
+
 
 const float LearningInputs[PatternCount][InputNodes] = {
 
