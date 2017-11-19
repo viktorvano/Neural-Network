@@ -4,15 +4,11 @@
 // Created by: Viktor Vano
 
 #include "stdafx.h"
-#include "stdio.h"
-#include "stdlib.h"
 #include "windows.h"
 #include <cmath>
 #include <vector>
 #include <iostream>
-#include <cstdlib>
 #include <cassert>
-#include <fstream>
 #include <sstream>
 
 
